@@ -1,8 +1,55 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/activity_base.html' %}
 {% load staticfiles %}
 
-{% block body %}
-    <div class="container">
+{% block addition_css %}
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+    <style>
+        .modal-dialog {
+            z-index: 1050;
+        }
+    </style>
+{% endblock %}
 
-    </div>
+{% block title %}
+    <a href="{% url 'admin:index' %}" class="pull-right btn btn-primary btn-sm">Go to Article List</a>
+    <h1>New Article</h1>
+{% endblock %}
+
+{% block content %}
+    <form id="new-form" action="{% url 'admin:new' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="chapter" class="control-label">Chapter</label>
+            <input type="text" id="chapter" name="chapter" class="form-control" placeholder="e.g. 1.10" />
+        </div>
+        <div class="form-group">
+            <label for="title" class="control-label">Title</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="e.g. 설치의 밤" />
+        </div>
+        <div class="form-group">
+            <label for="article-content" class="control-label">Content</label>
+            <div id="article-content"></div>
+            <input type="text" id="hidden-content" name="content" style="display:none;" />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block addition_js %}
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#article-content').summernote({
+                height: 300
+            });
+
+            $('#new-form').submit(function() {
+                var markupStr = $('#summernote').summernote('code');
+                $('#hidden-content').val(markupStr);
+                return true;
+            })
+        })
+    </script>
 {% endblock %}
