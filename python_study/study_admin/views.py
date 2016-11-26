@@ -159,12 +159,14 @@ class VisibleChange(View):
         article = get_object_or_404(Article, pk=kwargs.get('article_id'))
         if not request.is_ajax():
             return redirect(reverse('admin:modify', kwargs={'article_id':article.id}))
+        change_to = True
         if article.is_visible:
-            article.is_visible = False
+            change_to = False
         else:
-            article.is_visible = True
+            change_to = True
+        article.is_visible = change_to
         article.save()
-        return HttpsResponse('Done.')
+        return HttpResponse(str(change_to))
 
 
 class Delete(View):

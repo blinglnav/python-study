@@ -22,18 +22,15 @@
                     <td>{{ article.id }}</td>
                     <td>{{ article.chapter }}</td>
                     <td>{{ article.title }}</td>
-                    <td>{{ article.is_visible }}</td>
-                    <td>
-                        {% if article.is_visible %}
-                            <a href="#" class="btn btn-default btn-sm">Show</a>
-                        {% else %}
-                            <a href="#" class="btn btn-default btn-sm" disabled="disabled">Show</a>
-                        {% endif %}
-                    </td>
+                    <td id="is_visible_{{ article.id }}">{{ article.is_visible }}</td>
+                    <td><a href="#" class="btn btn-default btn-sm">Show</a></td>
                     <td>
                         <a href="{% url 'admin:detail' article_id=article.id %}" class="btn btn-primary btn-sm">
                             <i class="fa fa-book" aria-hidden="true"></i>
                         </a>
+                        <button id="change_visible_btn_{{ article.id }}" class="btn btn-default btn-sm">
+                            <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                        </button>
                         <a href="{% url 'admin:modify' article_id=article.id %}" class="btn btn-warning btn-sm">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
@@ -49,4 +46,23 @@
             </tr>
         {% endif %}
     </table>
+{% endblock %}
+
+{% block addition_js %}
+    <script>
+        {% for article in article_list %}
+            $('#change_visible_btn_{{ article.id }}').click(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'admin:visible_change' article_id=article.id %}",
+                    success:function(args){
+                        $("#is_visible_{{ article.id }}").text(args)
+                    },
+                    error:function(e){
+                        alert("Fail to change visibility:\n"+e.responseText);
+                    }
+                });
+            });
+        {% endfor %}
+    </script>
 {% endblock %}
