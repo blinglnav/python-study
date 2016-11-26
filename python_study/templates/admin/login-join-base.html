@@ -1,0 +1,23 @@
+{% extends 'admin/base.html' %}
+{% load staticfiles %}
+
+{% block addition_css %}
+    <link href="{% static 'css/login-join.css' %}" ref="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div id="title">
+            <div class="page-header">
+                <h1>
+                    Python Study Admin Page<br />
+                    <small>{% block sub_title %}{% endblock %}</small>
+                </h1>
+            </div>
+        </div>
+        <div id="form-box">
+            {% block form_box %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
