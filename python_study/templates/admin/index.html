@@ -31,13 +31,13 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{% url 'admin:detail' %}" class="btn btn-primary btn-sm">
+                        <a href="{% url 'admin:detail' article_id=article.id %}" class="btn btn-primary btn-sm">
                             <i class="fa fa-book" aria-hidden="true"></i>
                         </a>
-                        <a href="{% url 'admin:modify' %}" class="btn btn-warning btn-sm">
+                        <a href="{% url 'admin:modify' article_id=article.id %}" class="btn btn-warning btn-sm">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
-                        <a href="{% url 'admin:delete' %}" class="btn btn-danger btn-sm">
+                        <a href="{% url 'admin:delete' article_id=article.id %}" class="btn btn-danger btn-sm">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </a>
                     </td>
