@@ -162,9 +162,10 @@ class VisibleChange(View):
         change_to = True
         if article.is_visible:
             change_to = False
+            article.is_visible = False
         else:
             change_to = True
-        article.is_visible = change_to
+            article.publish()
         article.save()
         return HttpResponse(str(change_to))
 
