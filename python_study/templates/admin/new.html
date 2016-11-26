@@ -46,8 +46,10 @@
             });
 
             $('#new-form').submit(function() {
-                var markupStr = $('#summernote').summernote('code');
+                var markupStr = $('#article-content').summernote('code');
+                console.log(markupStr);
                 $('#hidden-content').val(markupStr);
+                console.log($('#hidden-content').val());
                 return true;
             })
         })
