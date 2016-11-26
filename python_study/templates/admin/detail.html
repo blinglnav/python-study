@@ -1,0 +1,14 @@
+{% extends 'admin/activity_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    <a href="{% url 'admin:index' %}" class="pull-right btn btn-primary btn-sm">Go to Article List</a>
+    <h1>Article Detail #{{ article.id }}</h1>
+{% endblock %}
+
+{% block content %}
+    <h2>{{ article.chapter }} {{ article.title }}</h2>
+    {{ article.write_at }} 작성 | {{ article.publish_at }} 발행
+    <hr />
+    {{ article.content|safe }}
+{% endblock %}
