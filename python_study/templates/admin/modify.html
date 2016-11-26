@@ -12,11 +12,11 @@
 
 {% block title %}
     <a href="{% url 'admin:index' %}" class="pull-right btn btn-primary btn-sm">Go to Article List</a>
-    <h1>New Article</h1>
+    <h1>Modify Article #{{ article.id }}</h1>
 {% endblock %}
 
 {% block content %}
-    <form id="new-form" action="{% url 'admin:new' %}" method="post">
+    <form id="new-form" action="{% url 'admin:modify' article_id=article.id %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label for="chapter" class="control-label">Chapter</label>
@@ -46,11 +46,11 @@
             });
 
             {% if article.content %}
-                $('#article-content').summernote('code', {{ article.content }});
+                $('#article-content').summernote("code", "{{ article.content }}");
             {% endif %}
 
             $('#new-form').submit(function() {
-                var markupStr = $('#article-content').summernote('code');
+                var markupStr = $('#article-content').summernote("code");
                 $('#hidden-content').val(markupStr);
                 return true;
             })

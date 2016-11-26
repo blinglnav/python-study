@@ -1,0 +1,28 @@
+{% extends 'admin/activity_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    <a href="{% url 'admin:index' %}" class="pull-right btn btn-primary btn-sm">Go to Article List</a>
+    <h1>Delete Article #{{ article.id }}</h1>
+{% endblock %}
+
+{% block content %}
+    <p class="text-danger">
+        {{ article.chapter }} {{ article.title }}를 정말 삭제하시겠습니까?<br />
+        삭제 후에는 복구가 불가능합니다.
+    </p>
+    <p>
+        삭제를 원하면 큰 따옴표로 감싸져 여있는 아래 문구를 따라 입력해주세요 (띄어쓰기 포함)
+    </p>
+    "{{ delete_check_msg }}"
+    <form action="{% url 'admin:delete' article_id=article.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="delete_check_msg" class="sr-only">Delete Check Message</label>
+            <input type="text" id="delete_check_msg" name="delete_check_msg" class="form-control" placeholder="{{ delete_check_msg }}" />
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-danger btn-block">Submit</button>
+        </div>
+    </form>
+{% endblock %}

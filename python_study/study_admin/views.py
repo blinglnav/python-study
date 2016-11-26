@@ -177,6 +177,7 @@ class Delete(View):
         article = get_object_or_404(Article, pk=kwargs.get('article_id'))
         context = {
             'article': article,
+            'delete_check_msg': article.title[:8],
             'login_user': User.get_login_user(request),
         }
         return render(request, 'admin/delete.html', context)
@@ -190,6 +191,7 @@ class Delete(View):
         else:
             context = {
                 'article': article,
+                'delete_check_msg': article.title[:8],
                 'login_user': User.get_login_user(request),
                 'error_msg': '삭제 확인 메시지를 정확하게 입력해주세요'
             }
