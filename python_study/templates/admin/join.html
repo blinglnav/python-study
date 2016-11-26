@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block form_box %}
+    {% if error_msg %}
+        <div class="alert alert-warning">
+            {{ error_msg }}
+        </div>
+    {% endif %}
     <form action="{% url 'admin:join' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
