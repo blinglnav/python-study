@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.urls import reverse
 from django.views import View
 from study_admin.models import *
@@ -150,6 +150,21 @@ class Modify(View):
                 'error_msg': '입력값이 올바르지 않습니다',
             }
             return render(request, 'admin/modify.html', context)
+
+
+class VisibleChange(View):
+    def get(self, request, *args, **kwargs):
+        if not User.now_login(request):
+            return redirect(reverse('admin:login'))
+        article = get_object_or_404(Article, pk=kwargs.get('article_id'))
+        if not request.is_ajax():
+            return redirect(reverse('admin:modify', kwargs={'article_id':article.id}))
+        if article.is_visible:
+            article.is_visible = False
+        else:
+            article.is_visible = True
+        article.save()
+        return HttpsResponse('Done.')
 
 
 class Delete(View):
