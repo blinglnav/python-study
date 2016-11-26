@@ -1,11 +1,11 @@
 {% extends 'admin/login-join-base.html' %}
 
 {% block sub_title %}
-    Login
+    Join
 {% endblock %}
 
 {% block form_box %}
-    <form action="{% url 'admin:login' %}" method="post">
+    <form action="{% url 'admin:join' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label for="username" class="sr-only">username</label>
@@ -15,9 +15,13 @@
             <label for="password" class="sr-only">password</label>
             <input type="password" name="password" id="password" class="form-control" placeholder="password" />
         </div>
+        <div class="form-group">
+            <label for="password_confirm" class="sr-only">password confirm</label>
+            <input type="password" name="password_confirm" id="password_confirm" class="form-control" placeholder="password confirm" />
+        </div>
         <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-            or <a href="{% url 'admin:join' %}">Join</a>
+            <button type="submit" class="btn btn-primary btn-block">Join</button>
+            or <a href="{% url 'admin:login' %}">Login</a>
         </div>
     </form>
 {% endblock %}
