@@ -29,7 +29,7 @@
         <div class="form-group">
             <label for="article-content" class="control-label">Content</label>
             <div id="article-content"></div>
-            <input type="text" id="hidden-content" name="content" style="display:none;" />
+            <textarea id="hidden-content" name="content" style="display:none;"></textarea>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -47,9 +47,7 @@
 
             $('#new-form').submit(function() {
                 var markupStr = $('#article-content').summernote('code');
-                console.log(markupStr);
                 $('#hidden-content').val(markupStr);
-                console.log($('#hidden-content').val());
                 return true;
             })
         })
