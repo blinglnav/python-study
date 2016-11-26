@@ -1,57 +1,52 @@
-{% extends 'admin/base.html' %}
+{% extends 'admin/activity_base.html' %}
 {% load staticfiles %}
 
-{% block body %}
-    <div class="container">
-        <div id="user-btn" class="pull-right">
-            {{ login_user.username }}&nbsp;
-            <a href="{% url 'admin:logout' %}" class="btn btn-default btn-sm">Logout</a>
-        </div>
-        <div class="page-header">
-            <a href="{% url 'admin:new' %}" class="pull-right btn btn-primary btn-sm">New Article</a>
-            <h1>Article List</h1>
-        </div>
-        <table class="table">
-            <tr>
-                <th>#</th>
-                <th>Chapter</th>
-                <th>Title</th>
-                <th>visibility</th>
-                <th>Published Page</th>
-                <th>Action</th>
-            </tr>
-            {% if article_list %}
-                {% for article in article_list %}
-                    <tr>
-                        <td>{{ article.id }}</td>
-                        <td>{{ article.chapter }}</td>
-                        <td>{{ article.title }}</td>
-                        <td>{{ article.is_visible }}</td>
-                        <td>
-                            {% if article.is_visible %}
-                                <a href="#" class="btn btn-default btn-sm">Show</a>
-                            {% else %}
-                                <a href="#" class="btn btn-default btn-sm" disabled="disabled">Show</a>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{% url 'admin:detail' %}" class="btn btn-primary btn-sm">
-                                <i class="fa fa-book" aria-hidden="true"></i>
-                            </a>
-                            <a href="{% url 'admin:modify' %}" class="btn btn-warning btn-sm">
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-                            <a href="{% url 'admin:delete' %}" class="btn btn-danger btn-sm">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            {% else %}
+{% block title %}
+    <a href="{% url 'admin:new' %}" class="pull-right btn btn-primary btn-sm">New Article</a>
+    <h1>Article List</h1>
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Chapter</th>
+            <th>Title</th>
+            <th>visibility</th>
+            <th>Published Page</th>
+            <th>Action</th>
+        </tr>
+        {% if article_list %}
+            {% for article in article_list %}
                 <tr>
-                    <td colspan="6" class="text-center">No item.</td>
+                    <td>{{ article.id }}</td>
+                    <td>{{ article.chapter }}</td>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.is_visible }}</td>
+                    <td>
+                        {% if article.is_visible %}
+                            <a href="#" class="btn btn-default btn-sm">Show</a>
+                        {% else %}
+                            <a href="#" class="btn btn-default btn-sm" disabled="disabled">Show</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'admin:detail' %}" class="btn btn-primary btn-sm">
+                            <i class="fa fa-book" aria-hidden="true"></i>
+                        </a>
+                        <a href="{% url 'admin:modify' %}" class="btn btn-warning btn-sm">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <a href="{% url 'admin:delete' %}" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
                 </tr>
-            {% endif %}
-        </table>
-    </div>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6" class="text-center">No item.</td>
+            </tr>
+        {% endif %}
+    </table>
 {% endblock %}

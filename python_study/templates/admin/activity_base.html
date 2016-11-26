@@ -1,0 +1,16 @@
+{% extends 'admin/base.html' %}
+
+{% block body %}
+    <div class="container">
+        <div id="user-btn" class="pull-right">
+            {{ login_user.username }}&nbsp;
+            <a href="{% url 'admin:logout' %}" class="btn btn-default btn-sm">Logout</a>
+        </div>
+        <div class="page-header">
+            {% block title %}
+            {% endblock %}
+        </div>
+        {% block content %}
+        {% endblock %}
+    </div>
+{% endblock %}
