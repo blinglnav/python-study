@@ -63,7 +63,7 @@ class Join(View):
 class Logout(View):
     def get(self, request, *args, **kwargs):
         User.set_logout(request)
-        return redirect(reverse('admin:logout'))
+        return redirect(reverse('admin:login'))
 
 
 class Index(View):
