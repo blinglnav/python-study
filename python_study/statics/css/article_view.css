@@ -1,0 +1,10 @@
+@import url(http://fonts.googleapis.com/earlyaccess/kopubbatang.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+@import url(//cdn.jsdelivr.net/font-hack/2.020/css/hack-extended.min.css);
+#content {
+    font-family: 'KoPub Batang', serif;
+}
+
+code {
+    font-family: 'Hack', 'Nanum Gothic Coding', serif;
+}
