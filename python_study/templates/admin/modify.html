@@ -46,7 +46,7 @@
             });
 
             {% if article.content %}
-                $('#article-content').summernote("code", "{{ article.content }}");
+                $('#article-content').summernote("code", '{{ article.content|safe }}');
             {% endif %}
 
             $('#new-form').submit(function() {
