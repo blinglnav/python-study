@@ -9,6 +9,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="{% static 'css/general.css' %}" rel="stylesheet" />
     <link href="{% static 'css/article_view.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/shCoreDefault.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/shThemeDefault.css' %}" rel="stylesheet" />
     {% block addition_css %}
     {% endblock %}
 </head>
@@ -32,6 +34,21 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/shCore.js' %}"></script>
+    <script src="{% static 'js/shLegacy.js' %}"></script>
+    <script src="{% static 'js/shBrushBash.js' %}"></script>
+    <script src="{% static 'js/shBrushCpp.js' %}"></script>
+    <script src="{% static 'js/shBrushCss.js' %}"></script>
+    <script src="{% static 'js/shBrushDiff.js' %}"></script>
+    <script src="{% static 'js/shBrushJScript.js' %}"></script>
+    <script src="{% static 'js/shBrushPhp.js' %}"></script>
+    <script src="{% static 'js/shBrushPlain.js' %}"></script>
+    <script src="{% static 'js/shBrushPython.js' %}"></script>
+    <script src="{% static 'js/shBrushSql.js' %}"></script>
+    <script src="{% static 'js/shBrushXml.js' %}"></script>
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
     {% block addition_js %}
     {% endblock %}
 </body>
