@@ -1,0 +1,38 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Python Web Study</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{% static 'css/general.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/article_view.css' %}" rel="stylesheet" />
+    {% block addition_css %}
+    {% endblock %}
+</head>
+<body>
+    <div class="row">
+        <div id="chapter" class="col-md-2 col-sm-3 col-xs-12">
+            <div class="list-group">
+                {% for article in article_list %}
+                    <a href="{% url 'user:article_view' article_id=article.id %}" class="list-group-item">{{ article.chapter }} {{ article.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="content" class="col-md-10 col-sm-9 col-xs-12">
+            <div class="container">
+                <div class="page-header">
+                    <h1>{{ article.chapter }} {{ article.title }}</h1>
+                </div>
+                {{ article.content|safe }}
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    {% block addition_js %}
+    {% endblock %}
+</body>
+</html>
