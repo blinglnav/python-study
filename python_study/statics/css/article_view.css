@@ -15,3 +15,8 @@ code {
     top: 1rem;
     z-index: 1000;
 }
+
+#content {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
