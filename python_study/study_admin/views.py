@@ -12,7 +12,7 @@ class Login(View):
         if User.now_login(request):
             return redirect(reverse('user:redirect_first_article'))
         context = {
-            'redirect_to': request.GET.get('redirect_to', reverse('admin:login')),
+            'redirect_to': request.GET.get('redirect_to', reverse('login')),
         }
         return render(request, 'admin/login.html', context)
     def post(self, request, *args, **kwargs):
@@ -22,7 +22,7 @@ class Login(View):
             return redirect(reverse('user:redirect_first_article'))
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        redirect_to = request.GET.get('redirect_to', reverse('admin:login'))
+        redirect_to = request.GET.get('redirect_to', reverse('login'))
         context = {
             'username': username,
             'redirect_to': redirect_to,
@@ -65,19 +65,19 @@ class Join(View):
         if not join_result[0]:
             context['error_msg'] = join_result[1]
             return render(request, 'admin/join.html', context)
-        return redirect(reverse('admin:login'))
+        return redirect(reverse('login'))
 
 
 class Logout(View):
     def get(self, request, *args, **kwargs):
         User.set_logout(request)
-        return redirect(reverse('admin:login'))
+        return redirect(reverse('login'))
 
 
 class Index(View):
     def get(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         article_qs = Article.objects.all()
         context = {
             'article_list': article_qs.order_by('chapter'),
@@ -90,7 +90,7 @@ class Index(View):
 class New(View):
     def get(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         context = {
             'login_user': User.get_login_user(request),
             'article_list_active': 'active',
@@ -98,7 +98,7 @@ class New(View):
         return render(request, 'admin/new.html', context)
     def post(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         article_form = ArticleForm(request.POST)
         if article_form.is_valid():
             chapter = article_form.cleaned_data['chapter']
@@ -124,7 +124,7 @@ class New(View):
 class Detail(View):
     def get(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         article = get_object_or_404(Article, pk=kwargs.get('article_id'))
         context = {
             'article': article,
@@ -137,7 +137,7 @@ class Detail(View):
 class Modify(View):
     def get(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         article = get_object_or_404(Article, pk=kwargs.get('article_id'))
         context = {
             'article': article,
@@ -147,7 +147,7 @@ class Modify(View):
         return render(request, 'admin/modify.html', context)
     def post(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         article = get_object_or_404(Article, pk=kwargs.get('article_id'))
         article_form = ArticleForm(request.POST)
         if article_form.is_valid():
@@ -169,7 +169,7 @@ class Modify(View):
 class VisibleChange(View):
     def get(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         article = get_object_or_404(Article, pk=kwargs.get('article_id'))
         if not request.is_ajax():
             return redirect(reverse('admin:modify', kwargs={'article_id':article.id}))
@@ -187,7 +187,7 @@ class VisibleChange(View):
 class Delete(View):
     def get(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         article = get_object_or_404(Article, pk=kwargs.get('article_id'))
         context = {
             'article': article,
@@ -198,7 +198,7 @@ class Delete(View):
         return render(request, 'admin/delete.html', context)
     def post(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         article = get_object_or_404(Article, pk=kwargs.get('article_id'))
         if article.title[:8] == request.POST.get('delete_check_msg'):
             article.delete()
@@ -217,7 +217,7 @@ class Delete(View):
 class UserIndex(View):
     def get(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         user_qs = User.objects.all()
         context = {
             'user_list': user_qs,

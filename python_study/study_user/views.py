@@ -13,7 +13,7 @@ class RedirectFirstArticle(View):
 class ArticleView(View):
     def get(self, request, *args, **kwargs):
         if not User.now_login(request):
-            return redirect(reverse('admin:login'))
+            return redirect(reverse('login'))
         article = get_object_or_404(Article, pk=kwargs.get('article_id'))
         if not article.is_visible:
             raise Http404

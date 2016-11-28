@@ -10,7 +10,7 @@
             {{ error_msg }}
         </div>
     {% endif %}
-    <form action="{% url 'admin:login' %}" method="post">
+    <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label for="username" class="sr-only">username</label>
@@ -22,7 +22,7 @@
         </div>
         <div class="form-group text-center">
             <button type="submit" class="btn btn-primary btn-block">Login</button>
-            or <a href="{% url 'admin:join' %}">Join</a>
+            or <a href="{% url 'join' %}">Join</a>
         </div>
     </form>
 {% endblock %}
