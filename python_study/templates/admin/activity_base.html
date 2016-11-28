@@ -6,6 +6,10 @@
             {{ login_user.username }}&nbsp;
             <a href="{% url 'admin:logout' %}" class="btn btn-default btn-sm">Logout</a>
         </div>
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="{{ article_list_active }}"><a href="{% url 'admin:index' %}">Articles</a></li>
+            <li role="presentation" class="{{ user_list_active }}"><a href="{% url 'admin:user_index' %}">Users</a></li>
+        </ul>
         <div class="page-header">
             {% block title %}
             {% endblock %}

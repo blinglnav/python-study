@@ -82,6 +82,7 @@ class Index(View):
         context = {
             'article_list': article_qs.order_by('chapter'),
             'login_user': User.get_login_user(request),
+            'article_list_active': 'active',
         }
         return render(request, 'admin/index.html', context)
 
@@ -92,6 +93,7 @@ class New(View):
             return redirect(reverse('admin:login'))
         context = {
             'login_user': User.get_login_user(request),
+            'article_list_active': 'active',
         }
         return render(request, 'admin/new.html', context)
     def post(self, request, *args, **kwargs):
@@ -114,6 +116,7 @@ class New(View):
                 'article': article_form.cleaned_data,
                 'login_user': User.get_login_user(request),
                 'error_msg': '입력값이 올바르지 않습니다',
+                'article_list_active': 'active',
             }
             return render(request, 'admin/new.html', context)
 
@@ -126,6 +129,7 @@ class Detail(View):
         context = {
             'article': article,
             'login_user': User.get_login_user(request),
+            'article_list_active': 'active',
         }
         return render(request, 'admin/detail.html', context)
 
@@ -138,6 +142,7 @@ class Modify(View):
         context = {
             'article': article,
             'login_user': User.get_login_user(request),
+            'article_list_active': 'active',
         }
         return render(request, 'admin/modify.html', context)
     def post(self, request, *args, **kwargs):
@@ -156,6 +161,7 @@ class Modify(View):
                 'article': article_form.cleaned_data,
                 'login_user': User.get_login_user(request),
                 'error_msg': '입력값이 올바르지 않습니다',
+                'article_list_active': 'active',
             }
             return render(request, 'admin/modify.html', context)
 
@@ -187,6 +193,7 @@ class Delete(View):
             'article': article,
             'delete_check_msg': article.title[:8],
             'login_user': User.get_login_user(request),
+            'article_list_active': 'active',
         }
         return render(request, 'admin/delete.html', context)
     def post(self, request, *args, **kwargs):
@@ -201,6 +208,47 @@ class Delete(View):
                 'article': article,
                 'delete_check_msg': article.title[:8],
                 'login_user': User.get_login_user(request),
-                'error_msg': '삭제 확인 메시지를 정확하게 입력해주세요'
+                'error_msg': '삭제 확인 메시지를 정확하게 입력해주세요',
+                'article_list_active': 'active',
             }
             return render(request, 'admin/delete.html', context)
+
+
+class UserIndex(View):
+    def get(self, request, *args, **kwargs):
+        if not User.login_user_is_admin(request):
+            return redirect(reverse('admin:login'))
+        user_qs = User.objects.all()
+        context = {
+            'user_list': user_qs,
+            'login_user': User.get_login_user(request),
+            'user_list_active': 'active',
+        }
+        return render(request, 'admin/user_index.html', context)
+
+
+class UserDelete(View):
+    def delete(self, request, *args, **kwargs):
+        if not User.login_user_is_admin(request):
+            return HttpResponse('forbidden', status=403)
+        if request.is_ajax():
+            user = get_object_or_404(User, pk=kwargs.get('user_id'))
+            user.delete()
+            return HttpResponse('ok.')
+
+
+class UserChangeValid(View):
+    def put(self, request, *args, **kwargs):
+        if not User.login_user_is_admin(request):
+            return HttpResponse('forbidden', status=403)
+        if request.is_ajax():
+            user = get_object_or_404(User, pk=kwargs.get('user_id'))
+            change_to = True
+            if user.is_valid:
+                user.is_valid = False
+                change_to = False
+            else:
+                user.is_valid = True
+                change_to = True
+            user.save()
+            return HttpResponse(change_to)

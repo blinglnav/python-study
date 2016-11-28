@@ -1,0 +1,71 @@
+{% extends 'admin/activity_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    <h1>User List</h1>
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>username</th>
+            <th>is valid</th>
+            <th>is admin</th>
+            <th>Action</th>
+        </tr>
+        {% if user_list %}
+            {% for user in user_list %}
+                <tr id="row_{{ user.id }}">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td id="is_valid_{{ user.id }}">{{ user.is_valid }}</td>
+                    <td id="is_admin_{{ user.id }}">{{ user.is_admin }}</td>
+                    <td>
+                        <button id="change_valid_{{ user.id }}" class="btn btn-primary btn-sm">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </button>
+                        <button id="delete_{{ user.id }}" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6" class="text-center">No item.</td>
+            </tr>
+        {% endif %}
+    </table>
+{% endblock %}
+
+{% block addition_js %}
+    <script>
+        {% for user in user_list %}
+            $('#change_valid_{{ article.id }}').click(function() {
+                $.ajax({
+                    type: "PUT",
+                    url: "{% url 'admin:user_change_valid' user_id=user.id %}",
+                    success:function(args){
+                        $("#is_valid_{{ user.id }}").text(args)
+                    },
+                    error:function(e){
+                        alert("Fail to change validity:\n"+e.responseText);
+                    }
+                });
+            });
+            $('#delete_{{ article.id }}').click(function() {
+                $.ajax({
+                    type: "DELETE",
+                    url: "{% url 'admin:user_delete' user_id=user.id %}",
+                    success:function(args){
+                        $("#row_{{ user.id }}").remove();
+                    },
+                    error:function(e){
+                        alert("Fail to delete user:\n"+e.responseText);
+                    }
+                });
+            });
+        {% endfor %}
+    </script>
+{% endblock %}
