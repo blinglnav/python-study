@@ -9,16 +9,20 @@ class Login(View):
     def get(self, request, *args, **kwargs):
         if User.login_user_is_admin(request):
             return redirect(reverse('admin:index'))
+        if User.now_login(request):
+            return redirect(reverse('user:redirect_first_article'))
         context = {
-            'redirect_to': request.GET.get('redirect_to', reverse('admin:index')),
+            'redirect_to': request.GET.get('redirect_to', reverse('admin:login')),
         }
         return render(request, 'admin/login.html', context)
     def post(self, request, *args, **kwargs):
         if User.login_user_is_admin(request):
             return redirect(reverse('admin:index'))
+        if User.now_login(request):
+            return redirect(reverse('user:redirect_first_article'))
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        redirect_to = request.GET.get('redirect_to', reverse('admin:index'))
+        redirect_to = request.GET.get('redirect_to', reverse('admin:login'))
         context = {
             'username': username,
             'redirect_to': redirect_to,
@@ -37,10 +41,14 @@ class Join(View):
     def get(self, request, *args, **kwargs):
         if User.login_user_is_admin(request):
             return redirect(reverse('admin:index'))
+        if User.now_login(request):
+            return redirect(reverse('user:redirect_first_article'))
         return render(request, 'admin/join.html')
     def post(self, request, *args, **kwargs):
         if User.login_user_is_admin(request):
             return redirect(reverse('admin:index'))
+        if User.now_login(request):
+            return redirect(reverse('user:redirect_first_article'))
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
         password_confirm = request.POST.get('password_confirm', '')
