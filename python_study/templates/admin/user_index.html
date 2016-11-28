@@ -42,7 +42,7 @@
 {% block addition_js %}
     <script>
         {% for user in user_list %}
-            $('#change_valid_{{ article.id }}').click(function() {
+            $('#change_valid_{{ user.id }}').click(function() {
                 $.ajax({
                     type: "PUT",
                     url: "{% url 'admin:user_change_valid' user_id=user.id %}",
@@ -54,7 +54,7 @@
                     }
                 });
             });
-            $('#delete_{{ article.id }}').click(function() {
+            $('#delete_{{ user.id }}').click(function() {
                 $.ajax({
                     type: "DELETE",
                     url: "{% url 'admin:user_delete' user_id=user.id %}",
