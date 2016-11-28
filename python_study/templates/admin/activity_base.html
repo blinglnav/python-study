@@ -4,7 +4,7 @@
     <div class="container">
         <div id="user-btn" class="pull-right">
             {{ login_user.username }}&nbsp;
-            <a href="{% url 'admin:logout' %}" class="btn btn-default btn-sm">Logout</a>
+            <a href="{% url 'logout' %}" class="btn btn-default btn-sm">Logout</a>
         </div>
         <ul class="nav nav-tabs">
             <li role="presentation" class="{{ article_list_active }}"><a href="{% url 'admin:index' %}">Articles</a></li>
