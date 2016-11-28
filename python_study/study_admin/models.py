@@ -13,6 +13,7 @@ class User(models.Model):
     salt = models.CharField(max_length=256)
     encrypt_cycle = models.IntegerField(default=25000)
     is_valid = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
 
     @staticmethod
     def now_login(request):
@@ -26,6 +27,14 @@ class User(models.Model):
         if User.now_login(request):
             return User.objects.get(pk=request.session.get('login_user_id'))
         return None
+
+    @staticmethod
+    def login_user_is_admin(request):
+        user = User.get_login_user(request)
+        if user and user.is_admin:
+            return True
+        else:
+            return False
 
     def _generate_salt(self):
         return binascii.hexlify(os.urandom(255)).decode()[:255]
