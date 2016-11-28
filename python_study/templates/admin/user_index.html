@@ -41,16 +41,33 @@
 
 {% block addition_js %}
     <script>
+        function getCookie(c_name)
+        {
+            if (document.cookie.length > 0)
+            {
+                c_start = document.cookie.indexOf(c_name + "=");
+                if (c_start != -1)
+                {
+                    c_start = c_start + c_name.length + 1;
+                    c_end = document.cookie.indexOf(";", c_start);
+                    if (c_end == -1) c_end = document.cookie.length;
+                    return unescape(document.cookie.substring(c_start,c_end));
+                }
+            }
+            return "";
+         }
         {% for user in user_list %}
             $('#change_valid_{{ user.id }}').click(function() {
                 $.ajax({
                     type: "PUT",
                     url: "{% url 'admin:user_change_valid' user_id=user.id %}",
+                    headers: { "X-CSRFToken": getCookie("csrftoken") },
                     success:function(args){
                         $("#is_valid_{{ user.id }}").text(args)
                     },
                     error:function(e){
                         alert("Fail to change validity:\n"+e.responseText);
+                        console.log(e.responseText);
                     }
                 });
             });
@@ -58,11 +75,13 @@
                 $.ajax({
                     type: "DELETE",
                     url: "{% url 'admin:user_delete' user_id=user.id %}",
+                    headers: { "X-CSRFToken": getCookie("csrftoken") },
                     success:function(args){
                         $("#row_{{ user.id }}").remove();
                     },
                     error:function(e){
                         alert("Fail to delete user:\n"+e.responseText);
+                        console.log(e.responseText);
                     }
                 });
             });

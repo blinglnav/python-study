@@ -241,7 +241,7 @@ class UserChangeValid(View):
     def put(self, request, *args, **kwargs):
         if not User.login_user_is_admin(request):
             return HttpResponse('forbidden', status=403)
-        if request.is_ajax():
+        elif request.is_ajax():
             user = get_object_or_404(User, pk=kwargs.get('user_id'))
             change_to = True
             if user.is_valid:
